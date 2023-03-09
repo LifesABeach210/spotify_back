@@ -11,7 +11,7 @@ var cookieParser = require('cookie-parser');
 require('dotenv').config();
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI + '/callback'; // Your redirect uri
 const refresh_token = process.env.REFRESH_TOKEN;
 const code = process.env.CODE;
 /**
@@ -124,7 +124,7 @@ app.get('/api/callback', function (req, res) {
         });
         // we can also pass the token to the browser to make requests from there
         res.redirect(
-          `http://localhost:3000/?${queryParams}` +
+          `${process.env.REDIRECT_URI}/?${queryParams}` +
             querystring.stringify({
               access_token: access_token,
               refresh_token: refresh_token,
