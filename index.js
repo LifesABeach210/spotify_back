@@ -44,11 +44,11 @@ app
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
-app.use('/users', usersRouter);
-app.use('/playlist', playlistRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/playlist', playlistRouter);
 var { mongoConnect } = require('./mongo.js');
 mongoConnect();
-app.get('/login', function (req, res) {
+app.get('/api/login', function (req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -67,7 +67,7 @@ app.get('/login', function (req, res) {
   );
 });
 
-app.get('/callback', function (req, res) {
+app.get('/api/callback', function (req, res) {
   // your application requests refresh and access tokens
   // after checking the state parameter
 
@@ -144,7 +144,7 @@ app.get('/callback', function (req, res) {
   }
 });
 
-app.get('/refresh_token', function (req, res) {
+app.get('/api/refresh_token', function (req, res) {
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
